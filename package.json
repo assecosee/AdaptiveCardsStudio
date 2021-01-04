@@ -3,8 +3,7 @@
 	"displayName": "Asseco Adaptive Card Studio",
 	"description": "Asseco Adaptive Card Studio for Visual Studio Code. Easy author AdaptiveCards, add sample data and more",
 	"version": "0.0.1",
-	"publisher": "madewithcardsio",
-	"enableProposedApi": true,
+	"publisher": "AssecoSouthEasternEurope",
 	"preview": true,
 	"engines": {
 		"vscode": "^1.44.0"
