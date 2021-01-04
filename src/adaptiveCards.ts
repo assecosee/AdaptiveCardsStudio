@@ -38,7 +38,7 @@ export class AdaptiveCardsMain {
         // when a template is edited, get data from json.data instead
         if(activeEditor.document.fileName.endsWith(".data.json")) {
             var templatefilePath: string = activeEditor.document.fileName.replace(".data","");
-            var activeFiles: vscode.TextDocument[] = vscode.workspace.textDocuments;
+            var activeFiles = vscode.workspace.textDocuments;
             activeFiles.forEach(file => {
                 if(file.fileName === templatefilePath) {
                     text = file.getText();
