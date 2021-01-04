@@ -1,5 +1,5 @@
-![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/madewithcardsio.adaptivecardsstudiobeta)
-![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/madewithcardsio.adaptivecardsstudiobeta)
+![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/AssecoSouthEasternEurope.assecoadaptivecardsstudiobeta)
+![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/AssecoSouthEasternEurope.assecoadaptivecardsstudiobeta)
 
 ![AC Studio ](https://madewithcards.blob.core.windows.net/uploads/29bb3d02-2158-40b8-8420-4dd1f15da34c-acstudio.png)
 
