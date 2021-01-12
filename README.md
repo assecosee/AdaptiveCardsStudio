@@ -15,6 +15,7 @@ This extension contributes the following settings:
 
 -   `acstudio.defaultHostConfig`  : The HostConfig to be used when rendering cards
 -   `acstudio.cardTemplatesSupportedLanguages`  : The list of the enabled languages for writting card templates (JSON and YAML are currently supported)
+
 Alpha and experimental:
 -   `acstudio.cmsAccessToken`  : (ALPHA) Access Token for the CMS used
 -   `acstudio.cmsAccessUrl`  : (ALPHA) URL To the CMS
