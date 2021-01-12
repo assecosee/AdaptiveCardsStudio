@@ -5,6 +5,17 @@ pool: 'Digital'
 
 steps:
 - task: DockerAdvanced@0
+  displayName: 'COMMIT_install'
+  inputs:
+    image: 'registry.see.asseco.com/tools/angular-module-builder:9.0'
+    dockerRegistryEndpoint: harbor
+    secureFile: npm-asee-dp-robot
+    commands: |
+      cp npm-asee-dp-robot /root/.npmrc   
+      npm install --no-progress --loglevel=warn
+      npm update --dev --no-progress --loglevel=warn
+
+- task: DockerAdvanced@0
   displayName: 'COMMIT_package'
   inputs:
     image: 'registry.see.asseco.com/tools/vsce:1.83'
