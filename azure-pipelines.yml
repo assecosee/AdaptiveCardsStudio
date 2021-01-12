@@ -13,7 +13,6 @@ steps:
     commands: |
       cp npm-asee-dp-robot /root/.npmrc   
       npm install --no-progress --loglevel=warn
-      npm update --dev --no-progress --loglevel=warn
 
 - task: DockerAdvanced@0
   displayName: 'COMMIT_package'
