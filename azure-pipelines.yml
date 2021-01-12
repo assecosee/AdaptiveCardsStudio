@@ -1,0 +1,13 @@
+variables:
+- group: common
+
+pool: 'Digital'
+
+steps:
+- task: DockerAdvanced@0
+  displayName: 'COMMIT_package'
+  inputs:
+    image: 'registry.see.asseco.com/tools/vsce:1.83'
+    dockerRegistryEndpoint: harbor
+    commands: |
+      package   
