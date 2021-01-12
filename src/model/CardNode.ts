@@ -27,7 +27,10 @@ export class CardNode implements INode {
         try {
             var list: INode[] = [];
             list.push(new CardNodeChild("Template",this.path,"template",0,this.acm));
-            list.push(new CardNodeChild("Data",this.path.replace(".json",".data.json"),"data",1,this.acm));
+            if (this.path.endsWith(".json"))
+                list.push(new CardNodeChild("Data",this.path.replace(".json",".data.json"),"data",1,this.acm));
+            else 
+                list.push(new CardNodeChild("Data",this.path.replace(".yaml",".data.yaml"),"data",1,this.acm));
             return list;
           } catch (error) {
               vscode.window.showErrorMessage(error);

@@ -7,6 +7,8 @@ import { INode } from "./model/nodes/INode";
 import axios from "axios";
 import Axios from "axios";
 import { isUndefined } from "util";
+import { load } from "js-yaml";
+import { config } from "process";
 
 export class AdaptiveCardsMain {
     private readonly _extensionPath: string;
@@ -33,29 +35,72 @@ export class AdaptiveCardsMain {
             return;
         }
 
+        var config = vscode.workspace.getConfiguration('acstudio');
+        var supportedLanguages = config.get('cardTemplatesSupportedLanguages');
         let text: string, data: string = "";
         // when a data file is edited, get text from json template instead
         // when a template is edited, get data from json.data instead
-        if(activeEditor.document.fileName.endsWith(".data.json")) {
-            var templatefilePath: string = activeEditor.document.fileName.replace(".data","");
-            var activeFiles = vscode.workspace.textDocuments;
-            activeFiles.forEach(file => {
-                if(file.fileName === templatefilePath) {
-                    text = file.getText();
+        if (activeEditor.document.fileName.endsWith(".json") && (supportedLanguages == "both" || supportedLanguages == "json")) {
+            if(activeEditor.document.fileName.endsWith(".data.json")) {
+                var templatefilePath: string = activeEditor.document.fileName.replace(".data","");
+                var activeFiles = vscode.workspace.textDocuments;
+                activeFiles.forEach(file => {
+                    if(file.fileName === templatefilePath) {
+                        text = file.getText();
+                    }
+                });
+                if (text === "" && fs.existsSync(templatefilePath)) {
+                    var rawData: string = require(templatefilePath);
+                    text = JSON.stringify(rawData);
                 }
-            });
-            if (text === "" && fs.existsSync(templatefilePath)) {
-                var rawData: string = require(templatefilePath);
-                text = JSON.stringify(rawData);
+                data = activeEditor.document.getText();
+            } else  {
+                text = activeEditor.document.getText();
+                var dataFilePath: string = activeEditor.document.fileName.replace(".json",".data.json");
+                if (fs.existsSync(dataFilePath)) {
+                    data = fs.readFileSync(dataFilePath, "ascii");
+                } else {
+                    data = "{}";
+                }
             }
-            data = activeEditor.document.getText();
-        } else {
-            text = activeEditor.document.getText();
-            var dataFilePath: string = activeEditor.document.fileName.replace(".json",".data.json");
-            if (fs.existsSync(dataFilePath)) {
-                data = fs.readFileSync(dataFilePath, "ascii");
+        }
+        else if (supportedLanguages == "both" || supportedLanguages == "yaml") {
+            if(activeEditor.document.fileName.endsWith(".data.yaml")) {
+                var templatefilePath: string = activeEditor.document.fileName.replace(".data","");
+                var activeFiles = vscode.workspace.textDocuments;
+                activeFiles.forEach(file => {
+                    if(file.fileName === templatefilePath) {
+                        text = file.getText();
+                    }
+                });
+                if (text === "" && fs.existsSync(templatefilePath)) {
+                    text = fs.readFileSync(templatefilePath, "ascii");
+                }
+                data = activeEditor.document.getText();
             } else {
-                data = "{}";
+                text = activeEditor.document.getText();
+                var dataFilePath: string = activeEditor.document.fileName.replace(".yaml",".data.yaml");
+                if (fs.existsSync(dataFilePath)) {
+                    data = fs.readFileSync(dataFilePath, "ascii");
+                } else {
+                    data = "";
+                }
+            }
+
+            if (text) {
+                const textObj = load(text);
+                text = JSON.stringify(textObj);
+            }
+            else {
+                text = '{}';
+            }
+
+            if (data) {
+                const dataObj = load(data);
+                data = JSON.stringify(dataObj);
+            }
+            else {
+                data = '{}';
             }
         }
 
@@ -156,8 +201,9 @@ export class AdaptiveCardsMain {
 			  });
 		} else {
 			// tslint:disable-next-line: typedef
-			let data = {};
-			fs.writeFile(path, JSON.stringify(data),err => {
+            let data = {};
+            let content = path.endsWith(".json") ? JSON.stringify(data) : '';
+			fs.writeFile(path, content,err => {
 				vscode.workspace.openTextDocument(path).then(card => {
 					vscode.window.showTextDocument(card, vscode.ViewColumn.One).then(async e => {
                         await this.OpenOrUpdatePanel("","");

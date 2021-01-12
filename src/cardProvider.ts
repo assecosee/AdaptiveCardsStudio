@@ -40,10 +40,28 @@ export class CardProvider implements vscode.TreeDataProvider<INode> {
         const items: INode[] = [];
         let folder = vscode.workspace.rootPath;
         vscode.window.showInformationMessage("Searching for Adaptive Cards in your workspace");
-        var files = await glob.sync(folder + "/**/*.json", { ignore: ["**/node_modules/**", "./node_modules/**"] });
+        var config = vscode.workspace.getConfiguration('acstudio');
+        var supportedLanguages = config.get('cardTemplatesSupportedLanguages');
+        var extensions = "";
+        if (supportedLanguages == "both") {
+            extensions = "{json,yaml}"
+        } 
+        else if (supportedLanguages == "json") {
+            extensions = "json";
+        }
+        else {
+            extensions = "yaml"
+        }
+        var files = await glob.sync(folder + "/**/*." + extensions, { ignore: ["**/node_modules/**", "./node_modules/**"] });
         var i = 0;
         files.forEach(file => {
-            var name = path.basename(file,".json");
+            var name = null;
+            if (file.endsWith(".json")) {
+                name = path.basename(file,".json");
+            }
+            else {
+                name = path.basename(file,".yaml");
+            }
             const searchTerm = "adaptivecards.io/schemas/adaptive-card.json";
             var content = fs.readFileSync(file, "utf8");
             if (content.includes(searchTerm)) {
