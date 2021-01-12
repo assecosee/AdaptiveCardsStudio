@@ -10,4 +10,4 @@ steps:
     image: 'registry.see.asseco.com/tools/vsce:1.83'
     dockerRegistryEndpoint: harbor
     commands: |
-      package   
+      vsce package   
