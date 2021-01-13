@@ -34,6 +34,8 @@ steps:
     image: 'registry.see.asseco.com/tools/vsce:1.83'
     dockerRegistryEndpoint: harbor
     commands: |
-      vsce publish
+      vsce publish -p $MARKETPLACE_PASSWORD
+    envVars: |
+      MARKETPLACE_PASSWORD=$(marketplacePassword) 
     volumes: |
       $(cacheVolumes)    
