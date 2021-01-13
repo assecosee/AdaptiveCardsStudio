@@ -2,7 +2,7 @@
 
 import * as vscode from "vscode";
 import { CardProvider } from "./cardProvider";
-import { CardProviderCMS } from "./CardProviderCMS";
+import { CardProviderCMS } from "./cardProviderCMS";
 import { AdaptiveCardsMain } from "./adaptiveCards";
 
 
