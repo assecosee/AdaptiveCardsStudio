@@ -2,7 +2,7 @@
 	"name": "assecoadaptivecardsstudiobeta",
 	"displayName": "Asseco Adaptive Card Studio",
 	"description": "Asseco Adaptive Card Studio for Visual Studio Code. Easy author AdaptiveCards, add sample data and more",
-	"version": "0.0.1-alpha",
+	"version": "0.0.1",
 	"publisher": "asseco",
 	"preview": true,
 	"engines": {
