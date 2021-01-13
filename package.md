@@ -1,13 +1,5 @@
-#making vsix package
-1. Install vsce (once)
-```
-npm install -g vsce
-```
+#making vsix package from pipeline
 
-2. update package.json with version
+1. update package.json with version and push it
 
-3. create package 
-```
-vsce package
-```
-
+2. tag your commit in format 0.0.x 

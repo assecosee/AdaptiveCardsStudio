@@ -1,3 +1,11 @@
+trigger:
+  branches:
+    exclude:
+      - '*'
+  tags:
+    include:
+    - 0.0.*
+
 variables:
 - group: common
 
@@ -26,6 +34,6 @@ steps:
     image: 'registry.see.asseco.com/tools/vsce:1.83'
     dockerRegistryEndpoint: harbor
     commands: |
-      vsce package
+      vsce publish
     volumes: |
       $(cacheVolumes)    
