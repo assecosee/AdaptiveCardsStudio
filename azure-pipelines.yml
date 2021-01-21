@@ -11,7 +11,7 @@ variables:
 
 - name: cacheVolumes
   value: |
-    /opt/cache/node_modules/adaptive_cards:/source/node_modules
+    /opt/cache/node_modules/adaptive_cards_studio:/source/node_modules
 
 pool: 'Digital'
 
