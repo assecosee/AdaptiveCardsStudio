@@ -104,7 +104,7 @@
 			"properties": {
 				"acstudio.defaultHostConfig": {
 					"type": "string",
-					"default": "microsoft-teams-dark",
+					"default": "agent-material",
 					"enum": [
 						"microsoft-teams-dark",
 						"microsoft-teams-light",
@@ -114,7 +114,8 @@
 						"cortana-skills",
 						"windows-timeline",
 						"BotFramework",
-						"windows-notification"
+						"windows-notification",
+						"agent-material"
 					],
 					"enumDescriptions": [
 						"MS Teams Host Config (Dark)",
@@ -125,7 +126,8 @@
 						"Cortana SKills (Light)",
 						"Windows Timeline",
 						"Bot Framework - Other",
-						"Windows Notifications (Preview)"
+						"Windows Notifications (Preview)",
+						"Adaptive UI Material"
 					]
 				},
 				"acstudio.cmsAccessToken": {
@@ -201,6 +203,8 @@
 		"edit"
 	],
 	"dependencies": {
+		"@asseco/adaptive-ui-material-web": "^0.2.1-20.dev.20210312.1.sha-4ff014",
+		"@asseco/adaptive-ui-web": "^0.2.1-20.dev.20210312.1.sha-4ff014",
 		"@types/js-yaml": "^4.0.0",
 		"adaptivecards": "^2.1.0",
 		"adaptivecards-templating": "^1.0.0-rc.0",

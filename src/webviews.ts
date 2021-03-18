@@ -68,7 +68,12 @@ export class WebViews {
 
         const ACstyle = vscode.Uri.file(	path.join(this._extensionPath, "media/css", "editormain.css"));
         const ACStyleUri = ACstyle.with({ scheme: "vscode-resource" });
+        
+        url = vscode.Uri.file(	path.join(this._extensionPath, "node_modules", "@asseco", "adaptive-ui-web", "index.js"));
+        const AdaptiveUiUri = url.with({ scheme: "vscode-resource" });
 
+        url = vscode.Uri.file(	path.join(this._extensionPath, "node_modules", "@asseco", "adaptive-ui-material-web", "index.js"));
+        const AdaptiveUiMaterialUri = url.with({ scheme: "vscode-resource" });
 
         const nonce = this.getNonce();
 
@@ -89,6 +94,33 @@ export class WebViews {
                                 </div>`;
         }
 
+        if (configName === "agent-material") {
+            designerTemplate = `
+                <div class="angularInnerContainer" id="designerRootHost">
+                    <div class="angularOuterContainer">
+                        <div style="height: 100%">
+                            <div id="asseco-as-card-container"></div>
+                        </div>
+                    </div>
+                </div>
+                <script type="application/javascript" nonce="${nonce}">
+                    document.addEventListener("AdaptiveScreenLoaded", function () {
+                    AdaptiveScreen.loadComponentsUiPack().then(() => {
+                            if (!document.getElementById("asseco-as-card-root")) { 
+                                document.getElementById("_defaultStyles").innerText = '';
+                                var asCardContainer = document.getElementById("asseco-as-card-container"); 
+                                var asCard = document.createElement("asseco-as-card");
+                                asCard.hostConfig = JSON.parse(document.getElementById("divConfig").innerText); 
+                                asCard.definition = JSON.parse(document.getElementById("divData").innerText); 
+                                asCardContainer.appendChild(asCard); 
+                            }
+                        }); 
+                    });
+                </script>
+                <script type="module" src="${AdaptiveUiUri}" nonce="${nonce}"></script>
+                <script type="module" src="${AdaptiveUiMaterialUri}" nonce="${nonce}"></script> 
+            `
+        }
 
         if ( designerTemplate === "" ) {
           designerTemplate = `<div id="cardHost"></div>`;
@@ -97,6 +129,7 @@ export class WebViews {
         return `<!DOCTYPE html>
                 <html lang="en">
                 <head>
+                    <base href="/">
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Cat Coding</title>
@@ -114,6 +147,12 @@ export class WebViews {
                 </head>
                 <body class='code'>
                     <div style='margin-top:25px'>
+                        <div id="divConfig" style='display:none;'>
+                            ${hostConfig}
+                        </div>
+                        <div id="divData" style='display:none;'>
+                            ${cardToRender}
+                        </div>
                         ${designerTemplate}
                         <div id="out"></div>
                         <script nonce="${nonce}" src="${jqueryUri}"></script>
@@ -125,13 +164,7 @@ export class WebViews {
                         <script nonce="${nonce}" src="${ACUFabricUri}"></script>
 
                         <script nonce="${nonce}" src="${MarkdownUri}"></script>
-                        <script nonce="${nonce}" src="${scriptUri}"></script>
-                        <div id="divConfig" style='display:none;'>
-                            ${hostConfig}
-                        </div>
-                        <div id="divData" style='display:none;'>
-                            ${cardToRender}
-                        </div>
+                        <script nonce="${nonce}" src="${scriptUri}"></script>                       
                     </div>
                 </body>
                 </html>`;

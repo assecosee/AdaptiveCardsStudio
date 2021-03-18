@@ -115,15 +115,18 @@ export class AdaptiveCardsMain {
                     this.panel = vscode.window.createWebviewPanel("ac.CardViewer","Adaptive Card",vscode.ViewColumn.Beside,{
                         enableScripts: true,
                         localResourceRoots: [
-                            vscode.Uri.file(path.join(this._extensionPath, "media"))
+                            vscode.Uri.file(path.join(this._extensionPath, "media")),
+                            vscode.Uri.file(path.join(this._extensionPath, "node_modules", "@asseco"))
                         ]
+
                     });
                 }
             } else {
                 this.panel = vscode.window.createWebviewPanel("ac.CardViewer","Adaptive Card",vscode.ViewColumn.Beside,{
                     enableScripts: true,
                     localResourceRoots: [
-                        vscode.Uri.file(path.join(this._extensionPath, "media"))
+                        vscode.Uri.file(path.join(this._extensionPath, "media")),
+                        vscode.Uri.file(path.join(this._extensionPath, "node_modules", "@asseco"))
                     ]
                 });
             }
